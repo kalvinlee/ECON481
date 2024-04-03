@@ -24,7 +24,7 @@
         for i in range(n):
             if i % 2 == 0:
                 e_sum += i
-            else:
+            else: # i % 2 == 1
                 o_sum += i
                 
         # returns dictionary of sums of evens and odds respectively
@@ -38,7 +38,7 @@
     # returns time between two dates in days
     # if out keyword is not specificed, assumed to be 'float' output
     # implements datetime package
-    def time_diff(date_1: str, date_2: str, out: str) -> Union[str,float]:
+    def time_diff(date_1: str, date_2: str, out: str = "float") -> Union[str,float]:
         # puts inputted dates into format to find delta
         d1 = datetime.strptime(date_1, "%Y-%m-%d")
         d2 = datetime.strptime(date_2, "%Y-%m-%d")
@@ -65,6 +65,8 @@
     # takes two natural numbers n and k, and returns probability of getting
     # k heads from n flips, from 50/50 coin flips
     def prob_k_heads(n: int, k: int) -> float:
+        # defining p-variable as prob to get heads on a flip
+        p = 0.5
         # helper function that reduces redundancy that calculates factorials recursively
         def factorial(x):
             # base case to get out of recursive loop
@@ -72,11 +74,11 @@
                 return 1
             else:
             # multiplies current value and gets next value from 
-                return x * factorial(x - 1)
+                return x * factorial(x-1)
     
-        # calculates n chooses k using the factorial helper method
+        # calculates n chooses k using the factorial helper function
         n_choose_k = factorial(n) / (factorial(k) * factorial(n - k))
     
-        # calculates probability based on binomial function from a fair coin
-        prob = n_choose_k * (0.5) ** k * (0.5) ** (n - k)
+        # calculates probability based on binomial function
+        prob = n_choose_k * (p) ** k * (1 - p) ** (n - k)
         return prob
