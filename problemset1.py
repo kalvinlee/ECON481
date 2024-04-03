@@ -72,7 +72,7 @@
                 return 1
             else:
             # multiplies current value and gets next value from 
-                return x * factorial(x-1)
+                return x * factorial(x - 1)
     
         # calculates n chooses k using the factorial helper method
         n_choose_k = factorial(n) / (factorial(k) * factorial(n - k))
