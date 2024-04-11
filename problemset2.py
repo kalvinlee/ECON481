@@ -16,17 +16,16 @@ import numpy as np
 # elements, (y,X) where y is a 1000 x 1 array and X is a 1000 x 3 array
 def simulate_data(seed: int = 481) -> tuple:
     np.random.seed(seed)
-    obs = 1000
     # generates x values
-    x1 = np.random.normal(0, np.sqrt(2), size = obs)
-    x2 = np.random.normal(0, np.sqrt(2), size = obs)
-    x3 = np.random.normal(0, np.sqrt(2), size = obs)
+    x_1 = np.random.normal(0, np.sqrt(2), 1000)
+    x_2 = np.random.normal(0, np.sqrt(2), 1000)
+    x_3 = np.random.normal(0, np.sqrt(2), 1000)
     # generates error values
-    e = np.random.normal(0, 1, size = obs)
+    e = np.random.normal(0, 1, 1000)
+    # generates X array
+    X = np.column_stack((x_1, x_2, x_3))
     # generates y values
-    y = 5 + 3 * x1 + 2 * x2 + 6 * x3 + e
-    # generates X 3D array
-    X = np.array([x1, x2, x3]).T
+    y = 5 + 3*x_1 + 2*x_2 + 6*x_3 + e
     return y,X
 
 # Exercise 2
@@ -64,9 +63,13 @@ def estimate_ols(y: np.array, X: np.array) -> np.array:
     def sse(beta: np.array, X: np.array, y: np.array):
         return np.sum((y - (X @ beta)) ** 2)
     # adds column to beginning matrix X as intercept term
-    X = np.hstack((np.ones((X.shape[0], 1)), X))
+    X = np.concatenate((np.ones((X.shape[0], 1)), X), axis = 1)
     # initializes guess for parameters
     b_initial = np.zeros(4)
     # finds OLS parameters
     b_result = sp.optimize.minimize(sse, b_initial, args = (X, y), method = 'Nelder-Mead')
     return b_result.x
+
+y,X = simulate_data()
+print(estimate_mle(y,X))
+print(estimate_ols(y,X))

@@ -4,8 +4,8 @@
 
 #exercise 0
     # returns link to solution file on github
-    def github() -> str:
-        return "https://github.com/kalvinlee/ECON481/blob/main/problemset1.py"
+def github() -> str:
+    return "https://github.com/kalvinlee/ECON481/blob/main/problemset1.py"
 
 #exercise 1
     # opened terminal and typed pip3 install <packagename> for
