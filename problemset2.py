@@ -69,7 +69,3 @@ def estimate_ols(y: np.array, X: np.array) -> np.array:
     # finds OLS parameters
     b_result = sp.optimize.minimize(sse, b_initial, args = (X, y), method = 'Nelder-Mead')
     return b_result.x
-
-y,X = simulate_data()
-print(estimate_mle(y,X))
-print(estimate_ols(y,X))
