@@ -65,16 +65,21 @@ def autoregress_logit(df: pd.DataFrame) -> float:
     df['y'] = (df['Deltax'] > 0).astype(int)
     # creates lag dataset by one day
     df['Delta_lag'] = df['Deltax'].shift(1)
+    # drops all na values
     df.dropna(subset = ['Delta_lag', 'y'], inplace = True)
     X = df['Delta_lag']
     y = df['y']
+    # models and returns t-value
     logit_model = sm.Logit(y,X).fit()
     return logit_model.tvalues['Delta_lag']
 
 # Exercise 5
 # takes a signle dataframe argument and plots Δx_t for the full dataset
 def plot_delta(df: pd.DataFrame) -> None:
+    # collects the differences in closed prices
     df['delta_x'] = df['Close'].diff()
+    # plots the data
     ax = df.plot(y = 'delta_x', color = 'purple')
+    # titles
     ax.set_title('Tesla Stock Change in Close Price')
     ax.set_ylabel('Change in Price ($)')
