@@ -62,7 +62,7 @@ def min_increment_freq() -> str:
     /* chooses the amount of times the next bid = bidIncrement by joining together the bids 
         items table, subquery helps calculate and determine previous bid, followed by 
         more filtering */
-    select sum(case when b.bidAmount - p.prevbid = i.bidIncrement then 1 else 0 end) as freq
+    select sum(case when b.bidAmount - p.prevbid = i.bidIncrement then 1 else 0 end) / count(*) as freq
     from bids as b
     inner join items as i on b.itemId = i.itemId
     inner join (
@@ -74,6 +74,7 @@ def min_increment_freq() -> str:
     return q
 
 # Exercise 4
+from sqlalchemy import func, distinct
     # takes no arguments, and returns a string containing a SQL query that can be run against the
     # auctions database that outputs a table that has two columns, timestamp_bin: normalize the
     # bid timestamp and classify it as one of ten bins. ex: 1 corresponds to 0-0.1, 2 to 0.1-0.2 etc.
@@ -108,7 +109,7 @@ def win_perc_by_timestamp() -> str:
     )
     /* outputs the bins and the winning percentage from within each bin*/
     select timestamp_bin,
-        win_count * 1.0 / (select w(win_count) FROM win) as win_perc
+        win_count * 1.0 / (select sum(win_count) from win) as win_perc
     from win
     group by timestamp_bin
     order by timestamp_bin;
