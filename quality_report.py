@@ -54,12 +54,13 @@ file = "104489-purchase_order_receipt_vendor_performance.xlsx"
 result = vender_on_time_percentages(file)
 print(result)
 
-def open_quote(excel_file):
+# Open Quotes
+def open_quotes(file_path):
     # reads excel file and organizes how data should be set-up
     df = pd.read_excel(file_path)
-    df['Date'] = pd.to_datetime(df['Date'], format='%Y/%m/%d')
-    df['Year-Month'] = df['Date'].dt.to_period('M')
-    grouped = df.groupby(['Year-Month', 'Name'])
+    df['Created On'] = pd.to_datetime(df['Created On'].str.replace('T', ''))
+    df['Year-Month'] = df['Created On'].dt.to_period('M')
+    grouped = df.groupby(['Year-Month', 'Inside Sales'])
     
     output_rows = []
 
@@ -76,7 +77,7 @@ def open_quote(excel_file):
                 'month': month,
                 'name': name,
                 'customer': row['Customer'],
-                'part': row['Prc Part'],
+                'part': row['Prcpart'],
                 'quote total': row['Quote Total']
             })
     
@@ -91,38 +92,43 @@ def vendor_delivery_data(file_path):
     df = pd.read_excel(file_path)
     
     # Convert the Date column to datetime format
-    df['Date'] = pd.to_datetime(df['Date'], format='%Y/%m/%d')
+    df['Received On'] = pd.to_datetime(df['Received On'], format='%Y/%m/%d')
     
     # Create a Year-Quarter column from the Date column
-    df['Year-Quarter'] = df['Date'].dt.to_period('Q')
+    df['Year-Quarter'] = df['Received On'].dt.to_period('Q')
     
     # Group by Year-Quarter and Vendor
     grouped = df.groupby(['Year-Quarter', 'Vendor'])
     
     # Initialize a list to store the output rows
-    output_rows = []
-
+    output = []
+    n = 10
+    
     # Iterate over each group
     for (year_quarter, vendor), group in grouped:
-        # Number of observations where days late > 10
-        late_count = (group['Days Late'] > 10).sum()
+        # Number of observations where days late >= n
+        late = (group['Days Late'] >= n).sum()
         
-        # Number of observations where days late <= 10
-        on_time_count = (group['Days Late'] <= 10).sum()
+        # Number of observations where days late < n
+        on_time = (group['Days Late'] < n).sum()
         
         # Total number of observations
-        total_count = group.shape[0]
+        total = group.shape[0]
+
+        # assumed on-time or total - late
+        assume_on_time = total - late
         
         # Append the calculated data to the output list
-        output_rows.append({
+        output.append({
             'year_quarter': year_quarter,
             'vendor': vendor,
-            '# late': late_count,
-            '# on-time': on_time_count,
-            '# total': total_count
+            '# late': late,
+            '# on-time': on_time,
+            '# total': total,
+            '# assumed on-time': assume_on_time
         })
     
     # Convert the list of output rows to a DataFrame
-    output_df = pd.DataFrame(output_rows)
+    output_df = pd.DataFrame(output)
     
     return output_df
