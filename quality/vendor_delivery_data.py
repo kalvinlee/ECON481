@@ -2,7 +2,7 @@
 import openpyxl
 import pandas as pd
 
-# Follow the first 7 steps Vendor On-Time Delivery Data, HAVING NO VENDOR SELECTED, with the dates as the entire
+# Follow the first 7 steps except step 5 Vendor On-Time Delivery Data, HAVING NO VENDOR SELECTED, with the dates as the entire
 # timespan wanted. Import the excel file and under the line file = , replace the name of the new excel file
 # with the old excel file, then run the chunk by hitting the play on top, and it'll create a new excel file
 # named vendor_delivery_data_output.xlsx which holds the information for this part of the metric
