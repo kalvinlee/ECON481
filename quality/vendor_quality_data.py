@@ -1,7 +1,11 @@
 import pandas as pd
 
-def vendor_quality_data_qty(file1):
-    df = pd.read_excel(file1)
+# Follow the first 5 steps Vendor Quality Data (based on qty), HAVING NO VENDOR SELECTED, with the dates as
+# the entire timespan wanted. Import the excel file and under the line file = , replace the name of the new 
+# excel file with the old excel file, then run the chunk by hitting the play on top, and it'll create a new
+# excel file named vendor_quality_data_qty.xlsx which holds the information for this part of the metric
+def vendor_quality_data_qty(excel_file):
+    df = pd.read_excel(excel_file)
     df['Inspected On'] = pd.to_datetime(df['Inspected On'], format = '%Y/%m/%d')
     df['Year-Quarter'] = df['Inspected On'].dt.to_period('Q')
 
@@ -21,22 +25,7 @@ def vendor_quality_data_qty(file1):
 
     return result
 
-def vendor_qual_data_pt2(file2):
-    df2 = pd.read_excel(file2)
-    df2['Date'] = pd.to_datetime(df2['Date'], format = '%Y/%m/%d')
-    df2['Year-Quarter'] = df2['Date'].dt.to_period('Q')
-
-    filtered_df2 = df2[df2['NCR Type'] == 'Manufacturing Defect']
-
-    result2 = filtered_df.groupby(['Year-Quarter', 'Vendor']).agg({
-        'Qty': 'sum'
-    }).reset_index()
-
-    return result2
-
 file = "104553-incoming_inspections.xlsx"
 result = vendor_quality_data_qty(file)
-# print(result)
 output_path = 'vendor_quality_data_qty.xlsx'
 result.to_excel(output_path, index = False)
-        

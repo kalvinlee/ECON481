@@ -1,6 +1,11 @@
 import pandas as pd
 #pip install pandas
 
+# Follow the first 3 steps of Customer On Time Report, but instead of first and last of every month, 
+# do the entire timespan you want. Make sure Invoice Date and Ship Target are included in the columns. 
+# Import the excel file and under the line file = , replace the name of the new excel file with the 
+# old excel file, then run the chunk by hitting the play on top, and it'll create a new excel file
+# named customer_on_time_percentages_output.xlsx which holds the information for this part of the metric
 def customer_on_time_percentages(excel_file):
     # Load the Excel file into a DataFrame
     df = pd.read_excel(excel_file)
@@ -30,6 +35,5 @@ def customer_on_time_percentages(excel_file):
 
 file = "104463-invoice_ontime_ship_report.xlsx"
 result = customer_on_time_percentages(file)
-print(result)
 output_path = 'customer_on_time_percentages_output.xlsx'
 result.to_excel(output_path, index=False)

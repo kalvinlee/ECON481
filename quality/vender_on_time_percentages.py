@@ -1,6 +1,10 @@
-#pip install pandas
 import pandas as pd
-def vender_on_time_percentages(excel_file):
+
+# Follow the first 3 steps of Vendor On-Time Report, with the dates as the entire timespan wanted
+# Import the excel file and under the line file = , replace the name of the new excel file with the 
+# old excel file, then run the chunk by hitting the play on top, and it'll create a new excel file
+# named vendor_on_time_percentages_output.xlsx which holds the information for this part of the metric
+def vendor_on_time_percentages(excel_file):
     # reads excel file
     df = pd.read_excel(excel_file)
     
@@ -20,7 +24,6 @@ def vender_on_time_percentages(excel_file):
     return on_time_df
 
 file = "104489-purchase_order_receipt_vendor_performance.xlsx"
-result = vender_on_time_percentages(file)
-print(result)
-output_path = 'vender_on_time_percentages_output.xlsx'
+result = vendor_on_time_percentages(file)
+output_path = 'vendor_on_time_percentages_output.xlsx'
 result.to_excel(output_path, index=False)
