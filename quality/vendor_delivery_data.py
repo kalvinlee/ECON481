@@ -1,7 +1,9 @@
-# pip install pandas
-
 import pandas as pd
 
+# Follow the first 5 steps Vendor On-Time Delivery Data, HAVING NO VENDOR SELECTED, with the dates as the entire
+# timespan wanted. Import the excel file and under the line file = , replace the name of the new excel file
+# with the old excel file, then run the chunk by hitting the play on top, and it'll create a new excel file
+# named vendor_delivery_data_output.xlsx which holds the information for this part of the metric
 def vendor_delivery_data(excel_file):
     # Read the Excel file into a pandas DataFrame
     df = pd.read_excel(excel_file)
@@ -46,7 +48,5 @@ def vendor_delivery_data(excel_file):
 
 file = "104537-purchase_order_receipt_vendor_performance.xlsx"
 result = vendor_delivery_data(file)
-# print(result)
-
 output_path = 'vendor_delivery_data_output.xlsx'
-result.to_excel(output_path, inde = False)
+result.to_excel(output_path, index = False)

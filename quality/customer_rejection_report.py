@@ -1,5 +1,10 @@
-#pip install pandas
 import pandas as pd
+
+# Customer rejection report needs two excel files to complete this. For file1, follow steps 1,4 and 5 and 
+# make sure return qty column is shown, for the entire timespan. For file2, follow steps 6-8 for the 
+# entire timespan. Import the excel files in, making sure file1 follows the first steps, and file2
+# follows the 6-8 steps. Running the chunk will create a new excel file customer_rejection_report.xlsx
+# which holds the information for this part of the metric
 def customer_rejection_report(file1, file2):
     df1 = pd.read_excel(file1)
     df2 = pd.read_excel(file2)
@@ -43,6 +48,5 @@ def customer_rejection_report(file1, file2):
 file1 = "104720-rma_details.xlsx"
 file2 = "104722-invoices.xlsx"
 result = customer_rejection_report(file1, file2)
-print(result)
 output_path = 'customer_rejection_report.xlsx'
-#result.to_excel(output_path, index = False)
+result.to_excel(output_path, index = False)
