@@ -1,3 +1,5 @@
+%pip install openpyxl
+import openpyxl
 import pandas as pd
 
 # Follow the first 3 steps of Open Quotes, with the dates as the entire timespan wanted

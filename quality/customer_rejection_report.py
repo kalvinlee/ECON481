@@ -1,3 +1,5 @@
+%pip install openpyxl
+import openpyxl
 import pandas as pd
 
 # Customer rejection report needs two excel files to complete this. For file1, follow steps 1,4 and 5 and 

@@ -1,3 +1,5 @@
+%pip install openpyxl
+import openpyxl
 import pandas as pd
 
 # Follow the first 5 steps Vendor On-Time Delivery Data, HAVING NO VENDOR SELECTED, with the dates as the entire

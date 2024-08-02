@@ -1,3 +1,5 @@
+%pip install openpyxl
+import openpyxl
 import pandas as pd
 
 # For the second part follow the steps 11-14 Vendor Quality Data (based on qty), with the dates as the

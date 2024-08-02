@@ -1,3 +1,5 @@
+%pip install openpyxl
+import openpyxl
 import pandas as pd
 
 # Vendor Rejection Report needs two excel files to complete this. For file1 follow steps 1 and 2, and
